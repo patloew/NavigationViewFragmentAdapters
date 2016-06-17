@@ -18,7 +18,7 @@ After you decided, create your adapter implementation:
 
 	private class MyNavigationViewAdapter extends NavigationViewFragmentAdapter {
 
-	    public MyDrawerAdapter(FragmentManager fragmentManager, @IdRes int containerId, @IdRes int defaultMenuItemId, Bundle savedInstanceState) {
+	    public MyNavigationViewAdapter(FragmentManager fragmentManager, @IdRes int containerId, @IdRes int defaultMenuItemId, Bundle savedInstanceState) {
             super(fragmentManager, containerId, defaultMenuItemId, savedInstanceState);
         }
 
@@ -40,10 +40,10 @@ After you decided, create your adapter implementation:
 
 Now, create an instance and attach it to your NavigationView in your Activity `onCreate()`:
 
-	myDrawerAdapter = new MyDrawerAdapter(getSupportFragmentManager(), R.id.container, R.id.navitem_1, savedInstanceState);
-	myDrawerAdapter.attachTo(navigationView);
+	adapter = new MyNavigationViewAdapter(getSupportFragmentManager(), R.id.container, R.id.navitem_1, savedInstanceState);
+	adapter.attachTo(navigationView);
 
-Also, don't forget to call `myDrawerAdapter.onSaveInstanceState()` in your Activity `onSaveInstanceState()`.
+Also, don't forget to call `adapter.onSaveInstanceState()` in your Activity `onSaveInstanceState()`.
 
 Now you have your navigation drawer up and running, including state saving of the fragments.
 
