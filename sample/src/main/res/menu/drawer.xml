@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navitem_1"
+            android:checked="true"
+            android:title="Fragment 1"/>
+
+        <item
+            android:id="@+id/navitem_2"
+            android:title="Fragment 2"/>
+
+        <item
+            android:id="@+id/navitem_3"
+            android:title="Fragment 3"/>
+
+    </group>
+
+    <group android:id="@+id/group_2" android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/navitem_settings"
+            android:title="Settings" />
+
+    </group>
+</menu>

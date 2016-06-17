@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">NavView Adapter Sample</string>
+    <string name="adapter_label">NavView Adapter Sample</string>
+    <string name="stateadapter_label">NavView State Adapter Sample</string>
+</resources>
