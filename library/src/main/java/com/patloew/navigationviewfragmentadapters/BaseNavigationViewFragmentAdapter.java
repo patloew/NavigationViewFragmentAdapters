@@ -32,7 +32,7 @@ abstract class BaseNavigationViewFragmentAdapter {
     NavigationView.OnNavigationItemSelectedListener listener = null;
 
     FragmentTransactionAnimations animations = new FragmentTransactionAnimations();
-    FragmentTransactionAnimations replaceAnimations = new FragmentTransactionAnimations();
+    FragmentTransactionAnimations backstackAnimations = new FragmentTransactionAnimations();
 
     int currentlyAttachedId;
 
@@ -69,7 +69,7 @@ abstract class BaseNavigationViewFragmentAdapter {
      * to the back stack.
      */
     public final void setBackStackCustomAnimations(@AnimRes int enter, @AnimRes int exit) {
-        replaceAnimations.setAnimations(enter, exit, 0, 0);
+        backstackAnimations.setAnimations(enter, exit, 0, 0);
     }
 
     /**
@@ -77,7 +77,7 @@ abstract class BaseNavigationViewFragmentAdapter {
      * to the back stack.
      */
     public final void setBackStackCustomAnimations(@AnimRes int enter, @AnimRes int exit, @AnimRes int popEnter, @AnimRes int popExit) {
-        replaceAnimations.setAnimations(enter, exit, popEnter, popExit);
+        backstackAnimations.setAnimations(enter, exit, popEnter, popExit);
     }
 
     /**

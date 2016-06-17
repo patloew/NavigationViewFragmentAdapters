@@ -33,7 +33,7 @@ public abstract class NavigationViewStateFragmentAdapter extends BaseNavigationV
 
     private static final String KEY_STATE = "state";
 
-    private StateMap mSavedState = new StateMap();
+    private StateMap stateMap = new StateMap();
 
     public NavigationViewStateFragmentAdapter(FragmentManager fragmentManager, @IdRes int containerId, @IdRes int defaultMenuItemId, Bundle savedInstanceState) {
         super(fragmentManager, containerId, defaultMenuItemId);
@@ -42,14 +42,14 @@ public abstract class NavigationViewStateFragmentAdapter extends BaseNavigationV
             if(!savedInstanceState.containsKey(KEY_STATE)) {
                 throw new IllegalStateException("You must call NavigationViewStateFragmentAdapter.onSaveInstanceState() in your Activity onSaveInstanceState()");
             } else {
-                mSavedState = savedInstanceState.getParcelable(KEY_STATE);
+                stateMap = savedInstanceState.getParcelable(KEY_STATE);
                 currentlyAttachedId = savedInstanceState.getInt(KEY_CURRENTID);
             }
         }
     }
 
     public final void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelable(KEY_STATE, mSavedState);
+        outState.putParcelable(KEY_STATE, stateMap);
         outState.putInt(KEY_CURRENTID, currentlyAttachedId);
     }
 
@@ -66,7 +66,7 @@ public abstract class NavigationViewStateFragmentAdapter extends BaseNavigationV
 
             if(shouldAddToBackStack(itemId)) {
                 FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                replaceAnimations.apply(fragmentTransaction);
+                backstackAnimations.apply(fragmentTransaction);
                 fragmentTransaction
                         .replace(containerId, getFragment(itemId), getTag(itemId))
                         .addToBackStack(null)
@@ -86,14 +86,14 @@ public abstract class NavigationViewStateFragmentAdapter extends BaseNavigationV
                     Fragment detachFragment = fm.findFragmentByTag(detachTag);
 
                     if (detachFragment != null) {
-                        mSavedState.put(detachTag, fm.saveFragmentInstanceState(detachFragment));
+                        stateMap.put(detachTag, fm.saveFragmentInstanceState(detachFragment));
                         fragmentTransaction.remove(detachFragment);
                     }
 
-                    Fragment.SavedState fss = mSavedState.get(attachTag);
+                    Fragment.SavedState fss = stateMap.get(attachTag);
                     if (fss != null) {
                         attachFragment.setInitialSavedState(fss);
-                        mSavedState.remove(attachTag);
+                        stateMap.remove(attachTag);
                     }
                     fragmentTransaction.add(containerId, attachFragment, attachTag);
 

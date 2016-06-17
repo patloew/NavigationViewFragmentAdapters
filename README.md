@@ -1,6 +1,6 @@
 # NavigationViewFragmentAdapters
 
- [ ![Download](https://api.bintray.com/packages/patloew/maven/NavigationViewFragmentAdapters/images/download.svg) ](https://bintray.com/patloew/maven/NavigationViewFragmentAdapters/_latestVersion) [![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=9)
+ [![Build Status](https://travis-ci.org/patloew/NavigationViewFragmentAdapters.svg?branch=master)](https://travis-ci.org/patloew/NavigationViewFragmentAdapters) [ ![Download](https://api.bintray.com/packages/patloew/maven/NavigationViewFragmentAdapters/images/download.svg) ](https://bintray.com/patloew/maven/NavigationViewFragmentAdapters/_latestVersion) [![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=9)
 
 A small library containing two adapters which allow for easy fragment management with a NavigationView.
 

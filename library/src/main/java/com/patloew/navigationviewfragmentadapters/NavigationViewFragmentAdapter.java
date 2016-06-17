@@ -59,7 +59,7 @@ public abstract class NavigationViewFragmentAdapter extends BaseNavigationViewFr
 
             if(shouldAddToBackStack(itemId)) {
                 FragmentTransaction fragmentTransaction = fm.beginTransaction();;
-                replaceAnimations.apply(fragmentTransaction);
+                backstackAnimations.apply(fragmentTransaction);
                 fragmentTransaction
                         .replace(containerId, getFragment(itemId), getTag(itemId))
                         .addToBackStack(null)
