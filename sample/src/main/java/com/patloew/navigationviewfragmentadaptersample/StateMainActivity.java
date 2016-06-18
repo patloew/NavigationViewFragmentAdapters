@@ -14,6 +14,7 @@
 
 package com.patloew.navigationviewfragmentadaptersample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -64,7 +65,16 @@ public class StateMainActivity extends AppCompatActivity implements MainActivity
         myNavigationViewAdapter.attachTo(navigationView);
         myNavigationViewAdapter.setCustomAnimations(R.anim.abc_fade_in, 0);
         myNavigationViewAdapter.setBackStackCustomAnimations(R.anim.abc_grow_fade_in_from_bottom, 0, R.anim.abc_fade_in, R.anim.abc_shrink_fade_out_from_bottom);
-        myNavigationViewAdapter.setNavigationItemSelectedListener(new CloseDrawerNavigationItemSelectedListener(drawerLayout));
+        myNavigationViewAdapter.setNavigationItemSelectedListener(new CloseDrawerNavigationItemSelectedListener(drawerLayout) {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                if(item.getItemId() == R.id.navitem_sample_activity) {
+                    startActivity(new Intent(StateMainActivity.this, SampleActivity.class));
+                }
+
+                return super.onNavigationItemSelected(item);
+            }
+        });
     }
 
     @Override
@@ -118,6 +128,11 @@ public class StateMainActivity extends AppCompatActivity implements MainActivity
         @Override
         public boolean shouldAddToBackStack(@IdRes int menuItemId) {
             return menuItemId == R.id.navitem_settings;
+        }
+
+        @Override
+        public boolean shouldHandleMenuItem(@IdRes int menuItemId) {
+            return menuItemId != R.id.navitem_sample_activity;
         }
     }
 }

@@ -49,6 +49,10 @@ Now you have your navigation drawer up and running, including state saving of th
 
 # Advanced Usage
 
+## OnNavigationItemSelectedListener
+
+An additional `OnNavigationItemSelectedListener` can be provided via `setNavigationItemSelectedListener()`. This can be used to add behavior after the fragment transaction was commited. If you just want to close the drawer, the lib includes a `CloseDrawerNavigationItemSelectedListener`.
+
 ## Back Stack
 
 There are cases when some menu items (e.g. settings) should not simply replace the current fragment, but also be added to the back stack. To do this, override `shouldAddToBackStack()` in your adapter:
@@ -58,13 +62,31 @@ There are cases when some menu items (e.g. settings) should not simply replace t
         return menuItemId == R.id.navitem_settings;
     }
 
+## Custom Actions
+
+If you don't want to handle fragments when a menu item is selected (e.g. to start an Activity), you can override `shouldHandleMenuItem()` in your adapter:
+
+    @Override
+    public boolean shouldHandleMenuItem(@IdRes int menuItemId) {
+        return menuItemId != R.id.navitem_sample_activity;
+    }
+
+Don't forget to set an additional `OnNavigationItemSelectedListener` via `setNavigationItemSelectedListener()`, where you have to handle these menu items:
+
+	adapter.setNavigationItemSelectedListener(new CloseDrawerNavigationItemSelectedListener(drawerLayout) {
+        @Override
+        public boolean onNavigationItemSelected(MenuItem item) {
+            if(item.getItemId() == R.id.navitem_sample_activity) {
+                startActivity(new Intent(MainActivity.this, SampleActivity.class));
+            }
+
+            return super.onNavigationItemSelected(item);
+        }
+    });
+
 ## Animations
 
 You can provide custom animations for your fragment transactions via `setCustomAnimations()`. Separate animations can be set for when you add the transaction to the back stack via `setBackStackCustomAnimations()`.
-
-## OnNavigationItemSelectedListener
-
-An additional `OnNavigationItemSelectedListener` can be provided via `setNavigationItemSelectedListener()`. This can be used to add behavior after the fragment transaction was commited. If you just want to close the drawer, the lib includes a `CloseDrawerNavigationItemSelectedListener`.
 
 # Sample
 
@@ -72,14 +94,10 @@ A basic sample app with example Activities for both adapters is available in the
 
 # Setup
 
-Add the following to your `build.gradle`:
-	
-	repositories {		
-		maven { url 'https://dl.bintray.com/patloew/maven' }		
-	}
+The library is available on jCenter. Add the following to your `build.gradle`:
 
 	dependencies {
-	    compile 'com.patloew.navigationviewfragmentadapters:adapters:0.1.1'
+	    compile 'com.patloew.navigationviewfragmentadapters:adapters:0.2.0'
 	}
 
 # License

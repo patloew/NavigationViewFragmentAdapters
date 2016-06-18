@@ -63,51 +63,59 @@ public abstract class NavigationViewStateFragmentAdapter extends BaseNavigationV
         @Override
         public boolean onNavigationItemSelected(MenuItem item) {
             int itemId = item.getItemId();
+            boolean handleItem = shouldHandleMenuItem(itemId);
+            boolean selectItem = false;
 
-            if(shouldAddToBackStack(itemId)) {
-                FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                backstackAnimations.apply(fragmentTransaction);
-                fragmentTransaction
-                        .replace(containerId, getFragment(itemId), getTag(itemId))
-                        .addToBackStack(null)
-                        .commit();
-                fm.executePendingTransactions();
-
-            } else {
-                String attachTag = getTag(itemId);
-
-                if(fm.findFragmentByTag(attachTag) == null) {
+            if(handleItem) {
+                if (shouldAddToBackStack(itemId)) {
                     FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                    animations.apply(fragmentTransaction);
+                    backstackAnimations.apply(fragmentTransaction);
+                    fragmentTransaction
+                            .replace(containerId, getFragment(itemId), getTag(itemId))
+                            .addToBackStack(null)
+                            .commit();
+                    fm.executePendingTransactions();
 
-                    String detachTag = getTag(currentlyAttachedId);
+                } else {
+                    String addTag = getTag(itemId);
 
-                    Fragment attachFragment = getFragment(itemId);
-                    Fragment detachFragment = fm.findFragmentByTag(detachTag);
+                    if (fm.findFragmentByTag(addTag) == null) {
+                        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                        animations.apply(fragmentTransaction);
 
-                    if (detachFragment != null) {
-                        stateMap.put(detachTag, fm.saveFragmentInstanceState(detachFragment));
-                        fragmentTransaction.remove(detachFragment);
+                        String removeTag = getTag(currentlyAttachedId);
+
+                        Fragment addFragment = getFragment(itemId);
+                        Fragment removeFragment = fm.findFragmentByTag(removeTag);
+
+                        if (removeFragment != null) {
+                            stateMap.put(removeTag, fm.saveFragmentInstanceState(removeFragment));
+                            fragmentTransaction.remove(removeFragment);
+                        }
+
+                        Fragment.SavedState fss = stateMap.get(addTag);
+                        if (fss != null) {
+                            addFragment.setInitialSavedState(fss);
+                            stateMap.remove(addTag);
+                        }
+                        fragmentTransaction.add(containerId, addFragment, addTag);
+
+                        fragmentTransaction.commitNow();
                     }
 
-                    Fragment.SavedState fss = stateMap.get(attachTag);
-                    if (fss != null) {
-                        attachFragment.setInitialSavedState(fss);
-                        stateMap.remove(attachTag);
-                    }
-                    fragmentTransaction.add(containerId, attachFragment, attachTag);
+                    currentlyAttachedId = itemId;
 
-                    fragmentTransaction.commitNow();
+                    selectItem = true;
                 }
-
-                currentlyAttachedId = itemId;
             }
 
             if(listener != null) {
-                return listener.onNavigationItemSelected(item);
-            } else {
-                return true;
+                listener.onNavigationItemSelected(item);
+            } else if(!handleItem) {
+                throw new IllegalStateException("You have to set a listener with setNavigationItemSelectedListener() when menu items should not be handled by the adapter");
             }
+
+            return selectItem;
         }
     }
 

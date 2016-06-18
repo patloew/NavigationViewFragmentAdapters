@@ -29,6 +29,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".SampleActivity" />
+
     </application>
 
 </manifest>

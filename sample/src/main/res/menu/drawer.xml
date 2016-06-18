@@ -23,5 +23,9 @@
             android:id="@+id/navitem_settings"
             android:title="Settings" />
 
+        <item
+            android:id="@+id/navitem_sample_activity"
+            android:title="Sample Activity" />
+
     </group>
 </menu>

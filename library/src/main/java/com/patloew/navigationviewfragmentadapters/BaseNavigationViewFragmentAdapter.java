@@ -21,6 +21,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.MenuItem;
 
 abstract class BaseNavigationViewFragmentAdapter {
 
@@ -81,9 +82,9 @@ abstract class BaseNavigationViewFragmentAdapter {
     }
 
     /**
-     * Sets an OnNavigationItemSelectedListener for adding additional
-     * behavior (e.g. closing a drawer). This is called after the
-     * fragment transaction is commited.
+     * Sets an OnNavigationItemSelectedListener for adding additional behavior (e.g. closing
+     * a drawer). This is called after the fragment transaction is commited. The return value of
+     * OnNavigationItemSelectedListener.onNavigationItemSelected(MenuItem) is ignored.
      *
      * @param listener An OnNavigationItemSelectedListener
      */
@@ -134,7 +135,7 @@ abstract class BaseNavigationViewFragmentAdapter {
     public abstract Fragment getFragment(@IdRes int menuItemId);
 
     /**
-     * Can be overriden to declare that some menu items (e.g. settings)
+     * Can be overriden to declare that some menu items (e.g. settings fragment)
      * should not simply replace the current fragment, but also be
      * added to the back stack.
      *
@@ -145,5 +146,15 @@ abstract class BaseNavigationViewFragmentAdapter {
         return false;
     }
 
-
+    /**
+     * Can be overriden to declare that some menu items should not be handled by the adapter (e.g. for
+     * starting an Activity). You have to handle these items yourself by setting a listener with
+     * setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener).
+     *
+     * @param menuItemId
+     * @return Whether menuItem should be handled by adapter
+     */
+    public boolean shouldHandleMenuItem(@IdRes int menuItemId) {
+        return true;
+    }
 }
