@@ -39,13 +39,14 @@ abstract class BaseNavigationViewFragmentAdapter {
 
     private boolean attached = false;
 
-    public BaseNavigationViewFragmentAdapter(FragmentManager fragmentManager, @IdRes int containerId, @IdRes int defaultMenuItemId) {
+    public BaseNavigationViewFragmentAdapter(@NonNull FragmentManager fragmentManager, @IdRes int containerId, @IdRes int defaultMenuItemId) {
         this.fm = fragmentManager;
         this.containerId = containerId;
         this.currentlyAttachedId = defaultMenuItemId;
     }
 
     // For internal use
+    @NonNull
     abstract NavigationView.OnNavigationItemSelectedListener getFragmentAdapterItemSelectedListener();
 
 

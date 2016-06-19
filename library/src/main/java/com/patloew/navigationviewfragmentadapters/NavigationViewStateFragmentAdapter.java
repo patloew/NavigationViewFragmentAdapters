@@ -35,7 +35,7 @@ public abstract class NavigationViewStateFragmentAdapter extends BaseNavigationV
 
     private StateMap stateMap = new StateMap();
 
-    public NavigationViewStateFragmentAdapter(FragmentManager fragmentManager, @IdRes int containerId, @IdRes int defaultMenuItemId, Bundle savedInstanceState) {
+    public NavigationViewStateFragmentAdapter(@NonNull FragmentManager fragmentManager, @IdRes int containerId, @IdRes int defaultMenuItemId, Bundle savedInstanceState) {
         super(fragmentManager, containerId, defaultMenuItemId);
 
         if(savedInstanceState != null) {
@@ -53,6 +53,7 @@ public abstract class NavigationViewStateFragmentAdapter extends BaseNavigationV
         outState.putInt(KEY_CURRENTID, currentlyAttachedId);
     }
 
+    @NonNull
     @Override
     final NavigationView.OnNavigationItemSelectedListener getFragmentAdapterItemSelectedListener() {
         return new FragmentAdapterItemSelectedListener();
@@ -68,9 +69,7 @@ public abstract class NavigationViewStateFragmentAdapter extends BaseNavigationV
 
             if(handleItem) {
                 if (shouldAddToBackStack(itemId)) {
-                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                    backstackAnimations.apply(fragmentTransaction);
-                    fragmentTransaction
+                    backstackAnimations.apply(fm.beginTransaction())
                             .replace(containerId, getFragment(itemId), getTag(itemId))
                             .addToBackStack(null)
                             .commit();
@@ -89,7 +88,8 @@ public abstract class NavigationViewStateFragmentAdapter extends BaseNavigationV
                         Fragment removeFragment = fm.findFragmentByTag(removeTag);
 
                         if (removeFragment != null) {
-                            stateMap.put(removeTag, fm.saveFragmentInstanceState(removeFragment));
+                            Fragment.SavedState savedState = fm.saveFragmentInstanceState(removeFragment);
+                            if(savedState != null) { stateMap.put(removeTag, savedState); }
                             fragmentTransaction.remove(removeFragment);
                         }
 

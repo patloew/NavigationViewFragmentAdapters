@@ -30,7 +30,7 @@ import android.view.MenuItem;
  */
 public abstract class NavigationViewFragmentAdapter extends BaseNavigationViewFragmentAdapter {
 
-    public NavigationViewFragmentAdapter(FragmentManager fragmentManager, @IdRes int containerId, @IdRes int defaultMenuItemId, Bundle savedInstanceState) {
+    public NavigationViewFragmentAdapter(@NonNull FragmentManager fragmentManager, @IdRes int containerId, @IdRes int defaultMenuItemId, Bundle savedInstanceState) {
        super(fragmentManager, containerId, defaultMenuItemId);
 
         if(savedInstanceState != null) {
@@ -47,6 +47,7 @@ public abstract class NavigationViewFragmentAdapter extends BaseNavigationViewFr
     }
 
     @Override
+    @NonNull
     final NavigationView.OnNavigationItemSelectedListener getFragmentAdapterItemSelectedListener() {
         return new FragmentAdapterItemSelectedListener();
     }
@@ -61,10 +62,7 @@ public abstract class NavigationViewFragmentAdapter extends BaseNavigationViewFr
 
             if(handleItem) {
                 if (shouldAddToBackStack(itemId)) {
-                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                    ;
-                    backstackAnimations.apply(fragmentTransaction);
-                    fragmentTransaction
+                    backstackAnimations.apply(fm.beginTransaction())
                             .replace(containerId, getFragment(itemId), getTag(itemId))
                             .addToBackStack(null)
                             .commit();
