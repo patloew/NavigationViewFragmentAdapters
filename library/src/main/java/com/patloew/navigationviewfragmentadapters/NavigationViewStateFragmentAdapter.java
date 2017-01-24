@@ -17,7 +17,6 @@ package com.patloew.navigationviewfragmentadapters;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -55,11 +54,11 @@ public abstract class NavigationViewStateFragmentAdapter extends BaseNavigationV
 
     @NonNull
     @Override
-    final NavigationView.OnNavigationItemSelectedListener getFragmentAdapterItemSelectedListener() {
+    final OnNavigationItemSelectedListener getFragmentAdapterItemSelectedListener() {
         return new FragmentAdapterItemSelectedListener();
     }
 
-    private final class FragmentAdapterItemSelectedListener implements NavigationView.OnNavigationItemSelectedListener {
+    private final class FragmentAdapterItemSelectedListener implements OnNavigationItemSelectedListener {
 
         @Override
         public boolean onNavigationItemSelected(MenuItem item) {
@@ -78,14 +77,15 @@ public abstract class NavigationViewStateFragmentAdapter extends BaseNavigationV
                 } else {
                     String addTag = getTag(itemId);
 
-                    if (fm.findFragmentByTag(addTag) == null) {
+                    Fragment addFragment = fm.findFragmentByTag(addTag);
+                    if (addFragment == null || addFragment.isRemoving()) {
                         FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                        fragmentTransaction.setAllowOptimization(false);
                         animations.apply(fragmentTransaction);
 
                         String removeTag = getTag(currentlyAttachedId);
-
-                        Fragment addFragment = getFragment(itemId);
                         Fragment removeFragment = fm.findFragmentByTag(removeTag);
+                        addFragment = getFragment(itemId);
 
                         if (removeFragment != null) {
                             Fragment.SavedState savedState = fm.saveFragmentInstanceState(removeFragment);
@@ -98,6 +98,7 @@ public abstract class NavigationViewStateFragmentAdapter extends BaseNavigationV
                             addFragment.setInitialSavedState(fss);
                             stateMap.remove(addTag);
                         }
+
                         fragmentTransaction.add(containerId, addFragment, addTag);
 
                         fragmentTransaction.commitNow();

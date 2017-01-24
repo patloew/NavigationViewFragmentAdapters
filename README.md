@@ -2,7 +2,7 @@
 
  [![Build Status](https://travis-ci.org/patloew/NavigationViewFragmentAdapters.svg?branch=master)](https://travis-ci.org/patloew/NavigationViewFragmentAdapters) [ ![Download](https://api.bintray.com/packages/patloew/maven/NavigationViewFragmentAdapters/images/download.svg) ](https://bintray.com/patloew/maven/NavigationViewFragmentAdapters/_latestVersion) [![API](https://img.shields.io/badge/API-9%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=9)
 
-A small library containing two adapters which allow for easy fragment management with a NavigationView.
+A small library containing two adapters which allow for easy fragment management with a NavigationView or BottomNavigationView.
 
 The library handles replacing the fragments and saving/restoring the fragment state, including showing the right fragment when opening an app again after it was killed.
 
@@ -45,7 +45,7 @@ Now, create an instance and attach it to your NavigationView in your Activity `o
 
 Also, don't forget to call `adapter.onSaveInstanceState()` in your Activity `onSaveInstanceState()`.
 
-Now you have your navigation drawer up and running, including state saving of the fragments.
+Now you have your navigation drawer or bottom navigation view up and running, including state saving of the fragments.
 
 # Advanced Usage
 
@@ -97,7 +97,7 @@ A basic sample app with example Activities for both adapters is available in the
 The library is available on jCenter. Add the following to your `build.gradle`:
 
 	dependencies {
-	    compile 'com.patloew.navigationviewfragmentadapters:adapters:0.2.0'
+	    compile 'com.patloew.navigationviewfragmentadapters:adapters:0.3.0'
 	}
 
 # License

@@ -19,9 +19,29 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".MainBottomNavigationActivity"
+            android:label="@string/adapter_label_bottomnavigation"
+            android:taskAffinity="com.patloew.navigationviewfragmentadaptersample.MainBottomNavigationActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".StateMainActivity"
             android:label="@string/stateadapter_label"
             android:taskAffinity="com.patloew.navigationviewfragmentadaptersample.StateMainActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".StateMainBottomNavigationActivity"
+            android:label="@string/stateadapter_label_bottomnavigation"
+            android:taskAffinity="com.patloew.navigationviewfragmentadaptersample.StateMainBottomNavigationActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

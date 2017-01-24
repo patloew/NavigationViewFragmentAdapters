@@ -18,6 +18,7 @@ import android.support.annotation.AnimRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,7 +31,7 @@ abstract class BaseNavigationViewFragmentAdapter {
     final FragmentManager fm;
     final int containerId;
 
-    NavigationView.OnNavigationItemSelectedListener listener = null;
+    OnNavigationItemSelectedListener listener = null;
 
     FragmentTransactionAnimations animations = new FragmentTransactionAnimations();
     FragmentTransactionAnimations backstackAnimations = new FragmentTransactionAnimations();
@@ -47,7 +48,7 @@ abstract class BaseNavigationViewFragmentAdapter {
 
     // For internal use
     @NonNull
-    abstract NavigationView.OnNavigationItemSelectedListener getFragmentAdapterItemSelectedListener();
+    abstract OnNavigationItemSelectedListener getFragmentAdapterItemSelectedListener();
 
 
     /**
@@ -89,7 +90,7 @@ abstract class BaseNavigationViewFragmentAdapter {
      *
      * @param listener An OnNavigationItemSelectedListener
      */
-    public final void setNavigationItemSelectedListener(@Nullable NavigationView.OnNavigationItemSelectedListener listener) {
+    public final void setNavigationItemSelectedListener(@Nullable OnNavigationItemSelectedListener listener) {
         this.listener = listener;
     }
 
@@ -108,6 +109,27 @@ abstract class BaseNavigationViewFragmentAdapter {
 
             if(!shouldAddToBackStack(currentlyAttachedId)) {
                 navigationView.getMenu().performIdentifierAction(currentlyAttachedId, 0);
+            }
+
+            attached = true;
+        }
+    }
+
+    /**
+     * Attaches this adapter to a BottomNavigationView. This can only
+     * be called once per adapter.
+     *
+     * @param bottomNavigationView The BottomNavigationView to attach to.
+     */
+    public final void attachTo(BottomNavigationView bottomNavigationView) {
+        if(attached) {
+            throw new IllegalStateException("The adapter can only be attached once.");
+
+        } else {
+            bottomNavigationView.setOnNavigationItemSelectedListener(getFragmentAdapterItemSelectedListener());
+
+            if(!shouldAddToBackStack(currentlyAttachedId)) {
+                bottomNavigationView.getMenu().performIdentifierAction(currentlyAttachedId, 0);
             }
 
             attached = true;

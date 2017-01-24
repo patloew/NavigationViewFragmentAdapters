@@ -17,7 +17,6 @@ package com.patloew.navigationviewfragmentadapters;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -48,11 +47,11 @@ public abstract class NavigationViewFragmentAdapter extends BaseNavigationViewFr
 
     @Override
     @NonNull
-    final NavigationView.OnNavigationItemSelectedListener getFragmentAdapterItemSelectedListener() {
+    final OnNavigationItemSelectedListener getFragmentAdapterItemSelectedListener() {
         return new FragmentAdapterItemSelectedListener();
     }
 
-    private final class FragmentAdapterItemSelectedListener implements NavigationView.OnNavigationItemSelectedListener {
+    private final class FragmentAdapterItemSelectedListener implements OnNavigationItemSelectedListener {
 
         @Override
         public boolean onNavigationItemSelected(MenuItem item) {

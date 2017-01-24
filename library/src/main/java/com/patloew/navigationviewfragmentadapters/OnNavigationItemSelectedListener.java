@@ -1,4 +1,4 @@
-/* Copyright 2016 Patrick Löwenstein
+/* Copyright 2017 Patrick Löwenstein
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,12 @@
 
 package com.patloew.navigationviewfragmentadapters;
 
-import android.support.v4.widget.DrawerLayout;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.view.MenuItem;
 
-/**
- * An listener which closes the drawer of a drawer layout,
- * when a NavigationView item is selected.
- */
-public class CloseDrawerNavigationItemSelectedListener implements OnNavigationItemSelectedListener {
-
-    private final DrawerLayout drawerLayout;
-
-    public CloseDrawerNavigationItemSelectedListener(DrawerLayout drawerLayout) {
-        this.drawerLayout = drawerLayout;
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        drawerLayout.closeDrawers();
-        return true;
-    }
+public interface OnNavigationItemSelectedListener
+        extends NavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemSelectedListener {
+    boolean onNavigationItemSelected(@NonNull MenuItem item);
 }
